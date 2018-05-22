@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <title>FamilyMart サラダスムージー</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+</head>
+<body>    
+  <header>
+  	<div class="banner">
+      <img src="images/header-main.png" />
+  	</div>
+  </header>
+
+  <div id="regModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modalCloser" data-target="regModal">&times;</span>
+        <h2>登録</h2>
+      </div>
+      <div class="modal-body">
+      	<div id="formSecWrapper">
+	        <div id="regSec" class="sec">
+	          <form id="regForm">
+	            <div>Email:</div>
+	            <input type="email" id="emailInput" required />
+	            <div></div>
+	            <input type="submit" id="submitBtn" value="OK" />
+	          </form>
+	          <div class="form-loader" id="formWorking">
+	          </div>
+	        </div>
+	        <div id="doneSec" class="sec">
+	          正式登録のためのリンクを登録頂いたEmailアドレスに送付しました。
+	          <br>
+	          内容をご確認頂き、リンクをクリックしていただければ登録は終了となります。
+	          <br>
+	          その後アンケートにお進みください。
+	        </div>
+	      </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="page-wrapper">
+  	<div id="loadingPage" class="page">
+	    <div class="loading-block">
+	      <br>LOADING
+	    </div>
+	  </div>
+	  <div id="regPage" class="page">
+    <div class="msg-wrapper">
+      キャンペーン告知
+      <br><br><br>
+      登録
+    </div>
+    <button class="registerBtn modalOpener" id="regEmail" data-target="regModal">Email</button>
+    <div></div>
+    <button class="registerBtn" id="regTwitter">Twitter</button>
+  </div>
+	  <div id="introPage" class="page">
+			<img class="intro-image" src="images/calbee.png" />
+			<div class="tnc-wrapper">	
+		    <div class="info">
+					<strong class="points-title">応募期間</strong>
+					<br>2018年 月 日から2018年 月 日まで
+					<br><br>
+					<strong class="points-title">概要</strong>
+					<br>アンケートを完了した方から抽選で500名さまに「カルビー じゃがりこ サラダ」が当たります。
+					<br><br>
+					<strong class="points-title">商品引き換え期間</strong>
+					<br>2018年6月23日(日）まで
+					<br><br>
+					<strong class="points-title">賞品</strong>
+					<br>カルビー じゃがりこ サラダ　1個
+					<br><br>
+					<strong class="points-title">受け取り場所</strong>
+					<br>セブン-イレブンでお受取りいただけます。
+					<br><a href="http://www.sej.co.jp/shop/index.html" target="_blank">詳細はコチラ</a>
+					<br><br>
+					<strong class="points-title">当選発表</strong>
+					<br>アンケート回答後、その場で当選が分かります。 また、当選した方にはTesTee・Powlのマイページにもお知らせします。
+					<br><br>
+					<strong class="points-title">引き換え方法</strong>
+					<br>当選画面・または上述のマイページにクーポンURLを記載しますので、 対象店舗にてお引き換えください。
+			  </div>
+			</div>
+		  <button id="toTerms" class="pageBtn next-btn" data-target="termsPage">NEXT <span class="right"></button>
+	  </div> 
+	  <div id="termsPage" class="page">
+	    <div class="msg-wrapper">
+		    以下の応募規約を読んで、同意の上、次へ進んでください。
+	    </div>
+	    <div class="tnc-wrapper">	
+	    <div class="terms" id="tnc">
+	    	<!-- <div class="instruction">
+					スクロールで
+					<br>最後まで表示されると
+					<br>同意のチェックボックスを活性化
+	    	</div> -->
+	    	<div class="points">
+		      <strong class="points-title">概要</strong>
+		      <br>アンケートを完了した方から抽選で500名さまに「カルビー じゃがりこ サラダ」が当たります。
+		      <br><br>
+		      <strong class="points-title">応募期間</strong>
+		      <br>2018年 月 日から2018年 月 日まで
+		      <br><br>
+		      <strong class="points-title">商品引き換え期間</strong>
+		      <br>2018年6月23日(日）まで
+		      <br><br>
+		      <strong class="points-title">賞品</strong>
+		      <br>カルビー じゃがりこ サラダ　1個
+		      <br><br>
+		      <strong class="points-title">受け取り場所</strong>
+		      <br>セブン-イレブンでお受取りいただけます。
+		      <br><br>
+		      <strong class="points-title">注意事項</strong>
+		      <ul>
+		        <li>お引き換えには、電子クーポン画面を表示できるスマートフォン・携帯電話が必要です。</li>
+		        <li>電子クーポン画面の表示にはインターネット接続が必要です。</li>
+		        <li>ご利用に関するパケット通信料はお客様のご負担となります。</li>
+		        <li>スマートフォンの一部の機種・ブラウザでは電子クーポン表示ができない場合がございます。</li>
+		        <li>パソコン、タブレット、インターネット機能がない端末(プリペイド携帯など)では電子クーポン表示ができません。</li>
+		        <li>電子クーポンを印刷したものを店頭にお持ちいただいても、引き換えできません。</li>
+		        <li>他の割引券・引換券などとは併用できません。</li>
+		        <li>期限が過ぎた電子クーポンは無効です。</li>
+		        <li>引換期間中、お一人様1回限りご利用が可能です。</li>
+		        <li>店舗により、商品のお取り扱いがない、品切れ、掲載商品とパッケージや容量が異なる場合がございますので、予めご了承ください。</li>
+		        <li>商品は発送されません。</li>
+		        <li>商品は予告なく終了や変更になる可能性がございます。</li>
+		        <li>店舗に在庫が無い／お近くに店舗が無い等の理由により、お引き換えができない場合でも代替品の送付はいたしません。</li>
+		        <li>キャンペーンの対象となる商品等の性質（利用に年齢制限があるもの等）によっては、ご応募をお断りする場合がございます。</li>
+		        <li>当選連絡の再送いたしかねますので、ご注意ください。</li>
+		        <li>詳しい引き換え手順は当選後のご確認ください。</li>
+		        <li>選考方法を問わず、応募結果等について、個別のお問い合わせにはお答えいたしかねます。</li>
+		        <li>商品の責任は商品提供企業にございます。商品に関するお問い合わせは、商品提供企業に直接お願いいたします。この場合でも商品の交換ができない場合もございますので、あらかじめご了承ください。</li>
+		        <li>商品のご利用に際してお客様に生じた損害に関して一切の責任を負いませんのでご了承ください。</li>
+		        <li>ご応募は、日本国内に在住の方に限らせていただきます。</li>
+		        <li>応募期間内であっても、応募後の内容修正などはできませんので、入力の際は間違いのないようにお願いいたします。</li>
+		        <li>当選権利の換金・他人への譲渡はできません。</li>
+		        <li>本キャンペーンはやむをえない理由により予告なく内容の変更や中止となることがあります。</li>
+		        <li>登録内容に誤りがあった場合や、不正なご登録と判断された場合は、特典当選の権利は無効となりますのでご了承ください。</li>
+		      </ul>
+		    </div>
+		  </div>
+		    <!-- <div class="agree-box miniCheckbox">
+		      <input type="checkbox" id="agreeCheck" disabled>
+		      <label for="agreeCheck">同意する</label>
+		      <span class="checkmark"></span>
+		    </div> -->
+		</div>
+	    <button id="startSurvey" class="pageBtn next-btn" data-target="page2" disabled>同意する </button>
+	  </div>
+	 <!--  <div id="page1" class="page">
+	  	<div id="q1" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	      <div class="question-no">
+	        1/8
+	    	</div>
+	      <button id="toQ2" class="pageBtn next-btn saveQuestion" data-question="1" data-target="page2">NEXT <span class="right"></button>
+	  	</div>
+	  </div> -->
+	  <div id="page2" class="page">
+	  	<div id="q2" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ1" class="pageBtn back-btn" data-target="page1">BACK <span class="left"></button>
+	      <div class="question-no">
+	        1/7
+	    	</div>
+	      <button id="toQ3" class="pageBtn next-btn saveQuestion" data-question="1" data-target="page3">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="page3" class="page">
+	  	<div id="q3" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ2" class="pageBtn back-btn" data-target="page2">BACK <span class="left"></button>
+	      <div class="question-no">
+	        2/7
+	    	</div>
+	      <button id="toQ4" class="pageBtn next-btn saveQuestion" data-question="2" data-target="page4">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="page4" class="page">
+	  	<div id="q4" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ3" class="pageBtn back-btn" data-target="page3">BACK <span class="left"></button>
+	      <div class="question-no">
+	        3/7
+	    	</div>
+	      <button id="toQ5" class="pageBtn next-btn saveQuestion" data-question="3" data-target="page5">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="page5" class="page">
+	  	<div id="q5" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ4" class="pageBtn back-btn" data-target="page4">BACK <span class="left"></button>
+	      <div class="question-no">
+	        4/7
+	    	</div>
+	      <button id="toQ6" class="pageBtn next-btn saveQuestion" data-question="4" data-target="page6">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="page6" class="page">
+	  	<div id="q6" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ5" class="pageBtn back-btn" data-target="page5">BACK <span class="left"></button>
+	      <div class="question-no">
+	        5/7
+	    	</div>
+		  	<button id="toQ7" class="pageBtn next-btn saveQuestion" data-question="5" data-target="page7">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="page7" class="page">
+	  	<div id="q7" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ6" class="pageBtn back-btn" data-target="page6">BACK <span class="left"></button>
+	      <div class="question-no">
+	        6/7
+	    	</div>
+		  	<button id="toQ8" class="pageBtn next-btn saveQuestion" data-question="6" data-target="page8">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="page8" class="page">
+	  	<div id="q8" class="pageQuestion">
+	  	</div>
+	  	<div class="pagination-wrapper">
+	  		<button id="toQ7" class="pageBtn back-btn" data-target="page7">BACK <span class="left"></button>
+	      <div class="question-no">
+	        7/7
+	    	</div>
+		  	<button id="toResult" class="pageBtn next-btn saveQuestion" data-question="7" data-target="resultPage">NEXT <span class="right"></button>
+	  	</div>
+	  </div>
+	  <div id="resultPage" class="page">
+		  <div id="resultTitle">
+		  	Result Title
+		  </div>
+		  <div id="resultDescription">
+		  </div>
+		  <img id="resultImage" src="images/calbee.png" />
+		  <div id="resultInstruction">
+		  </div>
+		  <a id="couponLink"><button><div id="couponLoader" class="loader in-btn"></div><span id="getCoupon"><!-- クーポンを受け取る --></span></button></a>
+	  </div>
+  </div>
+</body>
+</html>
