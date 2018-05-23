@@ -1,7 +1,12 @@
 import axios from 'axios';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from './firebaseConfig';
+firebase.initializeApp(firebaseConfig);
 
 // var domain = 'https://www.mobileads.com';
 var domain = 'http://localhost:8080';
+var functionsDomain = 'https://us-central1-familymarto2odemo.cloudfunctions.net/twitter';
 
 var campaignId = 'ca8ca8c34a363fa07b2d38d007ca55c6';
 var adUserId = '4441';
@@ -13,9 +18,18 @@ var trackingUrl = generalUrl.replace('{{rmaId}}', rmaId).replace('{{campaignId}}
 var user = {
 	isWanderer: false,
 	source: '',
-	info: {},
+	twitter: {
+		token: '',
+		secret: ''
+	},
+	info: {
+		Answers: '',
+		couponLink: '',
+		id: '',
+		noQuestionAnswered: 0,
+		state: '-'
+	},
 	get: function(userId) {
-		var _this = this;
     return axios.get(domain + '/api/coupon/softbank/user_info', {
       params: {
         id: userId
@@ -23,7 +37,6 @@ var user = {
     });
 	},
 	register: function(userId) {
-		var _this = this;
 		var regForm = new FormData();
     regForm.append('id', userId);
 
@@ -41,6 +54,24 @@ var user = {
     var regForm = new FormData();
     regForm.append('id', email);
     return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+	},
+	registerTwitter: function() {
+		console.log('registerTwitter');
+		var provider = new firebase.auth.TwitterAuthProvider();
+	  return firebase.auth().signInWithPopup(provider);
+	},
+	isFollowingTwitter: function() {
+		return axios.post(functionsDomain + '/getUser', {
+      token: this.twitter.token,
+      tokenSecret: this.twitter.secret,
+      id: this.info.id
+	  });
+	},
+	followTwitter: function() {
+		return axios.post(functionsDomain + '/followUs', {
+      token: this.twitter.token,
+      tokenSecret: this.twitter.secret
+    });
 	},
 	saveAnswer: function(userId, questionNo, answer) {
 		var ansForm = new FormData();

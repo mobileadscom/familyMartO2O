@@ -50,15 +50,28 @@
 	    </div>
 	  </div>
 	  <div id="regPage" class="page">
-    <div class="msg-wrapper">
-      キャンペーン告知
-      <br><br><br>
-      登録
-    </div>
-    <button class="registerBtn modalOpener" id="regEmail" data-target="regModal">Email</button>
-    <div></div>
-    <button class="registerBtn" id="regTwitter">Twitter</button>
-  </div>
+	    <div class="msg-wrapper">
+	      キャンペーン告知
+	      <br><br><br>
+	      登録
+	    </div>
+	    <div id="regButtons">
+	      <button class="registerBtn modalOpener" id="regEmail" data-target="regModal">Email</button>
+	      <div></div>
+	      <button class="registerBtn" id="regTwitter">Twitter</button>
+	    </div>
+	    <div class="form-loader" id="regWorking"></div>
+	  </div>
+	  <div id="followPage" class="page">
+	    <div class="msg-wrapper">
+	      キャンペーンに参加するために当社Twitter をフォローしてください。
+	    </div>
+	    <br>
+	    <img src="images/follow.png" style="width: 150px;" id="followBtn"/>
+	    <div id="successFollow">
+	      成功！
+	    </div>
+	  </div>
 	  <div id="introPage" class="page">
 			<img class="intro-image" src="images/calbee.png" />
 			<div class="tnc-wrapper">	

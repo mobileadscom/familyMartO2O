@@ -29,3 +29,27 @@
   box-sizing: border-box;
   display: none;
 }
+
+#regWorking.form-loader {
+  position: static;
+  transform: none;
+  border: 5px solid #94E2EF;
+  border-top: 5px solid #1DA1F2;
+}
+
+#followBtn:hover {
+  cursor: pointer;
+}
+
+#successFollow {
+  width: 200px;
+  margin: auto;
+  margin-top: 15px;
+  border-radius: 2px;
+  padding: 6px;
+  font-weight: 600;
+  font-size: 16px;
+  -webkit-animation: appearIn 0.3s linear;
+  animation: appearIn 0.3s linear;
+  display: none;
+}
