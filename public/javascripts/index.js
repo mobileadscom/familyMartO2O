@@ -147,7 +147,12 @@ var app = {
 		}
 		else {
 			if (noQuestionAnswered > 0) {
-				this.pages.toPage('page' + (noQuestionAnswered + 2).toString());
+				if (noQuestionAnswered < this.q.length - 1) {
+					this.pages.toPage('page' + (noQuestionAnswered + 1).toString());
+				}
+				else {
+					this.pages.toPage('page' + (this.q.length - 1).toString());
+				}
 			}
 			else {
 				this.pages.toPage('termsPage');
@@ -184,52 +189,7 @@ var app = {
 	  document.getElementById('toResult').addEventListener('click', () => {
 	  	if (!processed) {
 	  		processed = true;
-	  		var resultProperties = winningLogic.process(this.q, !user.isWanderer);
-	  		console.log(resultProperties);
-	  		var state = resultProperties.trackingResult;
-	  		var actualResult = resultProperties.actualResult;
-	  		var group = resultProperties.group;
-	  		var flag = resultProperties.flag;
-	
-	  		if (!user.isWanderer) {
-	  			if (actualResult == 'win') {
-		  			user.win(user.info.id, group, user.source).then((response) => {
-							console.log(response);
-							if (response.data.couponLink) {
-								this.initResult('win', response.data.couponLink);
-								user.passResult(user.info.id, flag, user.source, response.data.couponLink);
-							}
-							else {
-								this.initResult('lose');
-								user.passResult(user.info.id, flag, user.source);
-							}
-		  			}).catch((error) => {
-		  				console.log(error);
-			  			this.initResult('win');
-		  			});
-		  		}
-		  		else {
-		  			user.lose(user.info.id, user.source).then((response) => {
-		  				console.log(response);
-		  				user.passResult(user.info.id, flag, user.source);
-		  			}).catch((error) => {
-		  				console.log(error);
-		  			});
-		  			this.initResult('lose');
-		  		}
-
-		  		if (state == 'win') {
-		  			//track win
-		  			user.trackWin(user.info.id);
-		  		}
-		  		else {
-		  			user.trackLose(user.info.id);
-		  			// track lose
-		  		}
-	  		}
-	  		else {
-	  			this.initResult(state);
-	  		}	
+	  		this.processResult();
 	  	}
 	  });*/
 
@@ -248,7 +208,7 @@ var app = {
         spinner.style.display = 'none';
         if (response.data.status == true) {
         	this.formSections.toPage('doneSec');
-        	var emailContent = '<head><meta charset="utf-8"></head>ご登録ありがとうございました。下記にあるリンクをクリックしてください。その後キャンペーンへの参加をお願いします<br><br><a href="https://s3.amazonaws.com/rmarepo/o2odemo/index.html?id=' + email + '" target="_blank">https://s3.amazonaws.com/rmarepo/o2odemo/index.html?id=' + email + '</a>';
+        	var emailContent = '<head><meta charset="utf-8"></head>ご登録ありがとうございました。下記にあるリンクをクリックしてください。その後キャンペーンへの参加をお願いします<br><br><a href="https://rmarepo.richmediaads.com/o2o/familymart/demo/index.html?userId=' + email + '" target="_blank">https://rmarepo.richmediaads.com/o2o/familymart/demo/index.html?userId=' + email + '</a>';
         	user.sendEmail(email, 'FamilyMart Survey Link', emailContent);
         	// user.trackRegister();
         }
@@ -407,12 +367,12 @@ var app = {
 			  	localStorage.setItem('localAnswers', JSON.stringify(localAnswers));
 	  		}
 	  		var qNo = parseInt(e.target.dataset.question);
-	  		user.trackAnswer(this.params.userId, qNo, this.q[qNo].selectedAnswer);
-			  /*user.saveAnswer(this.params.userId, qNo, this.q[qNo].selectedAnswer).then((response) => {
+	  		// user.trackAnswer(this.params.userId, qNo, this.q[qNo].selectedAnswer);
+			  user.saveAnswer(user.info.id, qNo, this.q[qNo].selectedAnswer).then((response) => {
 			  	console.log(response);
 			  }).catch((error) => {
 			  	console.log(error);
-			  });*/
+			  });
 	  	})
 	 }
 	},
@@ -623,11 +583,11 @@ var app = {
 	  }
 	  else {
 			this.initUser(this.params.userId, false);
-
-	    /* get coupons */
-			coupon.get(this.params.source);
 		}
 
+    /* get coupons */
+		coupon.get(this.params.source);
+	  
 	  var processed = false; // check if result has been processed to avoid double result processsing
 
 		//youtube api
@@ -640,7 +600,7 @@ var app = {
       this.player = new YT.Player('vid', {
         height: vidHeight.toString(),
         width: vidWidth.toString(),
-        playerVars: {'rel': 0,'showinfo': 0, /*'controls': 0,*/ 'playsinline': 1},
+        playerVars: {'rel': 0,'showinfo': 0, 'controls': 0, 'playsinline': 1},
         videoId: 'OcoNMTSu8s8',
         events: {
           'onStateChange': (event) => {
