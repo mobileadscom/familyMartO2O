@@ -63,9 +63,18 @@ div {
   #resultDescription, #resultInstruction {
     font-size: 16px;
   }
+
+  .vid-wrapper {
+    width: 300px;
+    height: 250px;
+  }
 }
 
 @media( min-width: 480px) {
+  .vid-wrapper {
+    width: 450px;
+    height: 300px;
+  }
 }
 
 @media( min-width: 768px) {
@@ -120,6 +129,26 @@ div {
   }
 }
 
+.shadow-1 {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.shadow-2 {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.shadow-3 {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.shadow-4 {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.shadow-5 {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
 .red {
   color: #E54C3C;
 }
@@ -128,7 +157,7 @@ div {
   width: 100%;
   /*background-color: #EBEBEB;*/
   text-align: left;
-  background-image: url('../images/header-bg.png');
+  background-image: url('../images/header-bg2.png');
   background-size: auto 100%;
   background-repeat: repeat-x;
 }
@@ -251,6 +280,7 @@ div {
   height: 34px;
   padding: 1px 8px;
   transition: all 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 #startSurvey {
@@ -260,6 +290,7 @@ div {
 #couponLink button {
   width: 250px;
   text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .page .question-no {
@@ -400,4 +431,24 @@ button:hover .right:after {
   text-align: left;
   margin: auto;
   margin-top: 20px;
+}
+
+#toVideo {
+  margin: 20px;
+  margin-bottom: 40px;
+  background-color: #00bd4f;
+  border: none;
+  color: white;
+  padding: 6px 15px;
+  font-size: 18px;
+  border-radius: 8px;
+}
+
+#toVideo:hover {
+  cursor: pointer;
+  background-color: #00984f;
+}
+
+.vid-wrapper {
+  margin: 15px auto;
 }

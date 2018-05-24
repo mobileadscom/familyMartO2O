@@ -39,21 +39,27 @@ var user = {
 	register: function(userId) {
 		var regForm = new FormData();
     regForm.append('id', userId);
-
+    return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+	},
+	trackRegister: function(userId) {
     // track as impression
     if (window.location.hostname.indexOf('localhost') < 0) {
 	    var type = 'page_view';
 			var url = trackingUrl.replace('{{type}}', type).replace('{{value}}', '').replace('{{userId}}', userId);
+			return axios.get(url);
     }
-
-		axios.get(url);
-
-    return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
 	},
-	registerEmail: function(form, email) {
-    var regForm = new FormData();
-    regForm.append('id', email);
-    return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+	sendEmail: function(email, subjectTitle, content) {
+  	var formData = new FormData();
+    formData.append('sender', 'contact@o2otracking.com');
+    formData.append('subject', subjectTitle);
+    formData.append('recipient', email);
+    formData.append('content', content);
+    axios.post(domain + '/mail/send', formData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function(resp) {
+      console.log(resp);
+    }).catch(function(error) {
+      console.log(error);
+    });
 	},
 	registerTwitter: function() {
 		console.log('registerTwitter');
@@ -72,6 +78,14 @@ var user = {
       token: this.twitter.token,
       tokenSecret: this.twitter.secret
     });
+	},
+	messageTwitter: function(message) {
+		return axios.post(functionsDomain + '/sendMessage', {
+      token: this.twitter.token,
+      tokenSecret: this.twitter.secret,
+      recipientId: this.info.id,
+      text: message
+     });
 	},
 	saveAnswer: function(userId, questionNo, answer) {
 		var ansForm = new FormData();

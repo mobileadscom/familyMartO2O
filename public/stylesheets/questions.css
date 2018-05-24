@@ -49,10 +49,12 @@
 
 .answer:nth-child(odd), .m-answer:nth-child(odd) {
   background-color: #eee;
+  /*background-color: #ffffb5;*/
 }
 
 .answer:nth-child(even), .m-answer:nth-child(even) {
 	background-color: #ddd;
+  /*background-color: #ffff89;*/
 }
 
 .answer .rad {
@@ -60,7 +62,8 @@
 	transition: all 0.3s;
 	width: 12px;
 	height: 12px;
-	background-color: #536D79;
+	/*background-color: #536D79;*/
+  background-color: #3872da;
 	position: absolute;
 	left: 9px;
 	top: 50%;
@@ -87,12 +90,15 @@
 }
 
 .answer.selected:before {
-	border-color: #536D79;
+	/*border-color: #536D79;*/
+  border-color: #3872da;
 }
 
 .m-answer.selected:before {
-  border-color: #536D79;
-  background-color: #536D79;
+/*  border-color: #536D79;
+  background-color: #536D79;*/
+  border-color: #3872da;
+  background-color: #3872da;
 }
 
 .answer.selected .rad, .m-answer.selected .checkmark {

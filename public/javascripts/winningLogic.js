@@ -2,6 +2,10 @@ import coupon from './coupon';
 
 var winningLogic = {
 	winLogic: {
+    '6': {
+      value: ['セブン-イレブン', 'ローソン'],
+      priority: [2, 3]
+    }
 		/*'5': {
 			value: ['ほぼ毎日', '週４〜５回', '週２〜３回'],
 			priority: [2, 3, 4] // smaller number means higher priority. i.e. if user got Q6 and Q8 correct, winLogic of Q6 will be used because priority number of Q8 is higher.
@@ -53,41 +57,38 @@ var winningLogic = {
     }
     
     var trackingResult = 'lose'; // result to be tracked via custom ad tracking
-    var groups = ['','','A','B','C','D'];
+    var groups = ['','','A','B']; // array index follow priority. e.g. for win priority 2, the corresponding group has to be groups[2]
     var group = 'NA';
     var flag = '0'; // result to be stored in client side
     var actualResult = 'lose' // result to be stored to db via /mark_user, also shown in result page
 
-    if (questions[6].selectedAnswer.indexOf('セブン-イレブン') < 0) {
-      trackingResult = 'lose';
-    }
-    else {
-      if (winPrio < losePrio) {
-        trackingResult = 'win';
-        actualResult = 'win';
-        flag = '1';
-        if (considerGroup) {
-          group = groups[winPrio];
-          if (coupon.count[group] < 1) {
-            if (group == 'A' || group == 'B' || group == 'C') {
-              if (questions[7].selectedAnswer == 'セブン-イレブン' && coupon.count['D'] > 0) {
-                group = 'D';
-                actualResult = 'win';
-                flag = '1';
-              }
-              else {
-                actualResult = "lose";
-                flag = '0';
-              }
+
+    if (winPrio < losePrio) {
+      trackingResult = 'win';
+      actualResult = 'win';
+      flag = '1';
+      if (considerGroup) {
+        group = groups[winPrio];
+        if (coupon.count[group] < 1) {
+          /*if (group == 'A' || group == 'B' || group == 'C') {
+            if (questions[7].selectedAnswer == 'セブン-イレブン' && coupon.count['D'] > 0) {
+              group = 'D';
+              actualResult = 'win';
+              flag = '1';
             }
             else {
               actualResult = "lose";
               flag = '0';
             }
           }
-        }   
-      }
+          else {*/
+            actualResult = "lose";
+            flag = '0';
+          // }
+        }
+      }   
     }
+    
     return {
       trackingResult: trackingResult,
       actualResult: actualResult,

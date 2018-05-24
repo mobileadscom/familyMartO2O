@@ -11,9 +11,10 @@ import '../stylesheets/modal.css';
 import '../stylesheets/regForm.css';
 
 var app = {
-	pages: null,
-	params: {},
-	q: [],
+	pages: null, // array of pages
+	params: {}, // params in query string
+	q: [], // array of questions
+	player: null, //youtube player
 	getParams: function() {
 		  var query_string = {};
 		  var query = window.location.search.substring(1);
@@ -58,6 +59,56 @@ var app = {
 			document.getElementById('resultImage').style.display = 'none';
 			document.getElementById('couponLink').style.display = 'none';
 		}
+	},
+	processResult() {
+		var resultProperties = winningLogic.process(this.q, !user.isWanderer);
+		console.log(resultProperties);
+		var state = resultProperties.trackingResult;
+		var actualResult = resultProperties.actualResult;
+		var group = resultProperties.group;
+		var flag = resultProperties.flag;
+
+		if (!user.isWanderer) {
+			if (actualResult == 'win') {
+  			user.win(user.info.id, group, user.source).then((response) => {
+					console.log(response);
+					if (response.data.couponLink) {
+						this.initResult('win', response.data.couponLink);
+						var message = '綾鷹クーポンが当たりました！ ' + response.data.couponLink;
+						user.messageTwitter(message);
+						// user.passResult(user.info.id, flag, user.source, response.data.couponLink);
+					}
+					else {
+						this.initResult('lose');
+						// user.passResult(user.info.id, flag, user.source);
+					}
+  			}).catch((error) => {
+  				console.log(error);
+	  			this.initResult('win');
+  			});
+  		}
+  		else {
+  			user.lose(user.info.id, user.source).then((response) => {
+  				console.log(response);
+  				// user.passResult(user.info.id, flag, user.source);
+  			}).catch((error) => {
+  				console.log(error);
+  			});
+  			this.initResult('lose');
+  		}
+
+  		if (state == 'win') {
+  			//track win
+  			// user.trackWin(user.info.id);
+  		}
+  		else {
+  			// user.trackLose(user.info.id);
+  			// track lose
+  		}
+		}
+		else {
+			this.initResult(state);
+		}	
 	},
 	continue: function() {
 		var answerJson = '{}';
@@ -129,7 +180,7 @@ var app = {
 	  }
 	  
 	  /* Finished Answering Questions, process result */
-	  var processed = false;
+	  /*var processed = false;
 	  document.getElementById('toResult').addEventListener('click', () => {
 	  	if (!processed) {
 	  		processed = true;
@@ -180,7 +231,7 @@ var app = {
 	  			this.initResult(state);
 	  		}	
 	  	}
-	  });
+	  });*/
 
 		/* email registration */
 	  var form = document.getElementById('regForm');
@@ -192,23 +243,14 @@ var app = {
 	    spinner.style.display = 'block';
       event.preventDefault();
       var email = document.getElementById('emailInput').value;
-			user.registerEmail(form, email).then((response) => {
+			user.register(email).then((response) => {
 				console.log(response);
         spinner.style.display = 'none';
         if (response.data.status == true) {
         	this.formSections.toPage('doneSec');
-
-        	/* send email */
-        /*	var formData = new FormData();
-          formData.append('sender', 'contact@o2otracking.com');
-          formData.append('subject', 'FamilyMart Survey Link');
-          formData.append('recipient', email);
-          formData.append('content', '<head><meta charset="utf-8"></head>ご登録ありがとうございました。下記にあるリンクをクリックしてください。その後キャンペーンへの参加をお願いします<br><br><a href="https://s3.amazonaws.com/rmarepo/o2odemo/index.html?id=' + email + '" target="_blank">https://s3.amazonaws.com/rmarepo/o2odemo/index.html?id=' + email + '</a>');
-          axios.post(domain + '/mail/send', formData, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function(resp) {
-            console.log(resp);
-          }).catch(function(error) {
-            console.log(error);
-          });*/
+        	var emailContent = '<head><meta charset="utf-8"></head>ご登録ありがとうございました。下記にあるリンクをクリックしてください。その後キャンペーンへの参加をお願いします<br><br><a href="https://s3.amazonaws.com/rmarepo/o2odemo/index.html?id=' + email + '" target="_blank">https://s3.amazonaws.com/rmarepo/o2odemo/index.html?id=' + email + '</a>';
+        	user.sendEmail(email, 'FamilyMart Survey Link', emailContent);
+        	// user.trackRegister();
         }
         else if (response.data.message == 'user exist.') {
         	user.info = response.data.user;
@@ -218,6 +260,7 @@ var app = {
 
 			}).catch((error) => {
 				console.log(error);
+				form.style.display = 'block';
         spinner.style.display = 'none';
 			});
     };
@@ -268,6 +311,12 @@ var app = {
 				followBtn.style.display = 'block';
     	});
     }
+
+    document.getElementById('toVideo').addEventListener('click', () => {
+			setTimeout(() => {
+				this.player.playVideo();
+			}, 300);
+    });
 	  /* ==== Event Listeners End ==== */
 	},
 	checkTwitter: function() { // Check if user is following official page
@@ -295,7 +344,7 @@ var app = {
 						console.log(res);
 						user.isWanderer = false;
 						user.info.id = userId;
-						// user.source = this.params.source;
+						user.source = this.params.source;
 						if (isTwitter) {
 							this.checkTwitter();
 						}
@@ -303,6 +352,7 @@ var app = {
 							this.continue();
 						}
 					  this.enableSaveAnswer();
+					  // user.trackRegister();
 	    		}).catch((err) => {
 	    			user.isWanderer = true;
 	    			console.log(err);
@@ -317,7 +367,7 @@ var app = {
     	else { // user is registered
     		user.isWanderer = false;
 				user.info = response.data.user;
-				// user.source = this.params.source;
+				user.source = this.params.source;
 				
 				if (isTwitter) {
 					this.checkTwitter();
@@ -538,8 +588,12 @@ var app = {
 	  /* ==== Questions End ==== */
 	},
 	init: function() {
+		var vidWidth = document.getElementById('vid').clientWidth;
+    var vidHeight = document.getElementById('vid').clientHeight;
+
 		/* init pagination */
 		this.params = this.getParams();
+		this.params.source = 'source1'; // dummy source
 		this.pages = new miniPages({
 	  	pageWrapperClass: document.getElementById('page-wrapper'),
 	  	pageClass: 'page',
@@ -560,19 +614,47 @@ var app = {
 	  miniSelect.init('miniSelect');
 
 	  /* User Info */
-	  if (!this.params.userId ) {
+	  if (!this.params.userId || !this.params.source) {
 		  user.isWanderer = true;
 	    setTimeout(() => {
-		    // this.pages.toPage('regPage');
-		    this.pages.toPage('termsPage');
+		    this.pages.toPage('regPage');
+		    // this.pages.toPage('termsPage');
 		  }, 1000);
 	  }
 	  else {
 			this.initUser(this.params.userId, false);
 
 	    /* get coupons */
-			coupon.get(/*this.params.source*/);
+			coupon.get(this.params.source);
 		}
+
+	  var processed = false; // check if result has been processed to avoid double result processsing
+
+		//youtube api
+    var ytScript = document.createElement('script');
+    ytScript.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(ytScript, firstScriptTag);
+    
+    window.onYouTubeIframeAPIReady = () => {
+      this.player = new YT.Player('vid', {
+        height: vidHeight.toString(),
+        width: vidWidth.toString(),
+        playerVars: {'rel': 0,'showinfo': 0, /*'controls': 0,*/ 'playsinline': 1},
+        videoId: 'OcoNMTSu8s8',
+        events: {
+          'onStateChange': (event) => {
+            if (event.data == YT.PlayerState.ENDED) {
+            	if (!processed) {
+	            	processed = true;
+	            	this.processResult();
+								this.pages.toPage('resultPage');
+							}
+            }
+          }
+        }
+      });
+    }
 	}
 }
 
