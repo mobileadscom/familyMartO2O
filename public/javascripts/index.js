@@ -99,34 +99,34 @@ var app = {
 				this.pages.toPage('page' + (noQuestionAnswered + 2).toString());
 			}
 			else {
-				this.pages.toPage('introPage');
+				this.pages.toPage('termsPage');
 			}
 		}
 	},
 	events: function() {
 		/* ==== Event Listeners ==== */
 	  /* enabled terms agree checkbox when scrolled tnc to bottom */
-	  var enableAgreeCheckbox = false;
+	 /* var enableAgreeCheckbox = false;
 	  document.getElementById('tnc').addEventListener('scroll', function(event) {
 	  	if (!enableAgreeCheckbox) {
 	  		var element = event.target;
 		    if (element.scrollHeight - element.scrollTop < element.clientHeight + 50) {
-		    	document.getElementById('startSurvey').disabled = false;
+		    	document.getElementById('startSurvey').disabled = false;*/
 		      /*document.getElementById('agreeCheck').disabled = false;
 		      enableAgreeCheckbox = true;*/
-		    }
-	  	}
-	  });
+		 //    }
+	  // 	}
+	  // });
 	  
 	  /* enable start survey button when terms agree checkbox is checked */
-	  /*document.getElementById('agreeCheck').onchange = function() {
+	  document.getElementById('agreeCheck').onchange = function() {
 	    if (this.checked) {
 				document.getElementById('startSurvey').disabled = false;
 	    }
 	    else {
 	    	document.getElementById('startSurvey').disabled = true;
 	    }
-	  }*/
+	  }
 	  
 	  /* Finished Answering Questions, process result */
 	  var processed = false;
@@ -306,7 +306,7 @@ var app = {
 	    		}).catch((err) => {
 	    			user.isWanderer = true;
 	    			console.log(err);
-	    			this.pages.toPage('introPage');
+	    			this.pages.toPage('termsPage');
 	    		});
 	    	}
 	    	else {
@@ -330,7 +330,7 @@ var app = {
     }).catch((error) => {
     	user.isWanderer = true;
 			console.log(error);
-			this.pages.toPage('introPage');
+			this.pages.toPage('termsPage');
     });
 	},
 	enableSaveAnswer: function() {
@@ -364,38 +364,25 @@ var app = {
 			  	console.log(error);
 			  });*/
 	  	})
-	  }
+	 }
 	},
 	setQuestions() {
 		/* ==== Set Questions ==== */
-	/*  this.q[1] = new singleAnswerQuestion({
-	  	wrapper: document.getElementById('q1'),
-	    question: '<span class="red">QUESTION 1</span><br>応募にあたり、応募規約に同意します',
-	    answers: [{
-	    	value: 'はい',
-	    	text: 'はい',
-	    }, {
-	    	value: 'いいえ',
-	    	text: 'いいえ'
-	    }],
-	    nextBtn: document.getElementById('toQ2')
-	  });*/
-
 	  this.q[1] = new singleAnswerQuestion({
-	  	wrapper: document.getElementById('q2'),
+	  	wrapper: document.getElementById('q1'),
 	  	question: '<span class="red">QUESTION 1</span><br>あなたの性別を教えてください',
 	  	answers: [{
-	    	value: '男',
-	    	text: '男',
+	    	value: '男性',
+	    	text: '男性',
 	    }, {
-	    	value: '女',
-	    	text: '女'
+	    	value: '女性',
+	    	text: '女性'
 	    }],
-	    nextBtn: document.getElementById('toQ3')
+	    nextBtn: document.getElementById('toQ2')
 	  });
 	  
 	  this.q[2] = new singleAnswerQuestion({
-	  	wrapper: document.getElementById('q3'),
+	  	wrapper: document.getElementById('q2'),
 	  	question: '<span class="red">QUESTION 2</span><br>あなたの年代を教えてください',
 	  	answers: [{
 	    	value: '19歳未満',
@@ -425,12 +412,12 @@ var app = {
 	    	value: '60歳以上',
 	    	text: '60歳以上'
 	    }],
-	    nextBtn: document.getElementById('toQ4')
+	    nextBtn: document.getElementById('toQ3')
 	  });
 
 	  this.q[3] = new dropdownQuestion({
-	  	wrapper: document.getElementById('q4'),
-	  	question: '<span class="red">QUESTION 3</span><br>あなたのお住まいの都道府県を教えてください',
+	  	wrapper: document.getElementById('q3'),
+	  	question: '<span class="red">QUESTION 3</span><br>あなたのお住まいの地域は?',
 	  	answers: [
 				{ value:'北海道', text:'北海道'},
 				{ value:'青森県', text:'青森県'},
@@ -480,28 +467,28 @@ var app = {
 				{ value:'鹿児島県', text:'鹿児島県'},
 				{ value:'沖縄県', text:'沖縄県'}
 	  	],
-	  	nextBtn: document.getElementById('toQ5')
+	  	nextBtn: document.getElementById('toQ4')
 	  });
 
 	  this.q[4] = new singleAnswerQuestion({
-	  	wrapper: document.getElementById('q5'),
-	  	question: '<span class="red">QUESTION 4</span><br>インターネットで応募して、景品（飲料やお菓子など店頭で販売されている商品）をコンビニで受け取るキャンペーンに応募したことがある',
+	  	wrapper: document.getElementById('q4'),
+	  	question: '<span class="red">QUESTION 4</span><br>スムージーを飲んだことはありますか？',
 	  	answers: [{
-	    	value: '応募したことがあり、当選して景品を受け取ったことがある',
-	    	text: '応募したことがあり、当選して景品を受け取ったことがある',
+	    	value: '飲んだことがある。',
+	    	text: '飲んだことがある。',
 	    }, {
-	    	value: '応募したことはあるが、景品を受け取ったことはない',
-	    	text: '応募したことはあるが、景品を受け取ったことはない'
+	    	value: '飲んだことはないが、飲んでみたいと思う。',
+	    	text: '飲んだことはないが、飲んでみたいと思う。'
 	    }, {
-	    	value: '応募したことがない',
-	    	text: '応募したことがない'
+	    	value: '飲んだことがない。',
+	    	text: '飲んだことがない。'
 	    }],
-	    nextBtn: document.getElementById('toQ6')
+	    nextBtn: document.getElementById('toQ5')
 	  });
 
 	  this.q[5] = new singleAnswerQuestion({
-	  	wrapper: document.getElementById('q6'),
-	  	question: '<span class="red">QUESTION 5</span><br>コンビニに行く頻度を教えてください',
+	  	wrapper: document.getElementById('q5'),
+	  	question: '<span class="red">QUESTION 5</span><br>コンビニにいく頻度を教えてください。',
 	  	answers: [{
 	    	value: 'ほぼ毎日',
 	    	text: 'ほぼ毎日',
@@ -521,43 +508,18 @@ var app = {
 	    	value: '月１回未満',
 	    	text: '月１回未満'
 	    }],
-	    nextBtn: document.getElementById('toQ7')
+	    nextBtn: document.getElementById('toQ6')
 	  });
 
 	  this.q[6] = new multipleAnswerQuestion({
-	  	wrapper: document.getElementById('q7'),
-	  	question: '<span class="red">QUESTION 6</span><br>過去３ヶ月以内で来店したコンビニを教えてください（複数選択可）',
+	  	wrapper: document.getElementById('q6'),
+	  	question: '<span class="red">QUESTION 6</span><br>いつも行くコンビニを教えてください',
 	  	answers: [{
-	    	value: 'セブン-イレブン',
-	    	text: 'セブン-イレブン',
-	    }, {
 	    	value: 'ファミリーマート',
-	    	text: 'ファミリーマート'
+	    	text: 'ファミリーマート',
 	    }, {
-	    	value: 'ローソン',
-	    	text: 'ローソン'
-	    }, {
-	    	value: 'ミニストップ',
-	    	text: 'ミニストップ'
-	    }, {
-	    	value: 'サークルK・サンクス',
-	    	text: 'サークルK・サンクス'
-	    }, {
-	    	text: 'その他',
-	      type: 'text'
-	    }],
-	    nextBtn: document.getElementById('toQ8')
-	  });
-
-	  this.q[7] = new singleAnswerQuestion({
-	  	wrapper: document.getElementById('q8'),
-	  	question: '<span class="red">QUESTION 7</span><br>あなたが一番よく使うコンビニを教えてください',
-	  	answers: [{
 	    	value: 'セブン-イレブン',
-	    	text: 'セブン-イレブン',
-	    }, {
-	    	value: 'ファミリーマート',
-	    	text: 'ファミリーマート'
+	    	text: 'セブン-イレブン'
 	    }, {
 	    	value: 'ローソン',
 	    	text: 'ローソン'
