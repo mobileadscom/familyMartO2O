@@ -533,7 +533,7 @@ var app = {
 	    	text: 'その他',
 	      type: 'text'
 	    }],
-	    nextBtn: document.getElementById('toResult')
+	    nextBtn: document.getElementById('toApply')
 	  });
 	  /* ==== Questions End ==== */
 	},
@@ -563,7 +563,8 @@ var app = {
 	  if (!this.params.userId ) {
 		  user.isWanderer = true;
 	    setTimeout(() => {
-		    this.pages.toPage('regPage');
+		    // this.pages.toPage('regPage');
+		    this.pages.toPage('termsPage');
 		  }, 1000);
 	  }
 	  else {
