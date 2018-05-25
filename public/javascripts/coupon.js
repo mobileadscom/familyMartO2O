@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// var domain = 'https://www.mobileads.com';
-var domain = 'http://localhost:8080';
+var domain = 'https://www.mobileads.com';
+// var domain = 'http://localhost:8080';
 
 var coupon = {
 	count: {
@@ -11,7 +11,7 @@ var coupon = {
 		D: 0
 	},
 	get: function(source) {
-		var _this = this;
+		/*var _this = this;
     axios.get(domain + '/api/coupon/softbank/coupons_check', {
     	params: {
     		source: source
@@ -24,7 +24,15 @@ var coupon = {
       _this.count.D = response.data.D;
     }).catch(function(error) {
       console.log(error);
-    });
+    });*/
+
+
+        
+    this.count.A = 10;
+    this.count.B = 10;
+    this.count.C = 0;
+    this.count.D = 0;
+
 	}
 }
 

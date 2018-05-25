@@ -4,8 +4,8 @@ import 'firebase/auth';
 import firebaseConfig from './firebaseConfig';
 firebase.initializeApp(firebaseConfig);
 
-// var domain = 'https://www.mobileads.com';
-var domain = 'http://localhost:8080';
+var domain = 'https://www.mobileads.com';
+// var domain = 'http://localhost:8080';
 var functionsDomain = 'https://us-central1-familymarto2odemo.cloudfunctions.net/twitter';
 
 var campaignId = 'ca8ca8c34a363fa07b2d38d007ca55c6';
