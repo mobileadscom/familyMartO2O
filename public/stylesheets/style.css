@@ -51,7 +51,8 @@ div {
   }
 
   #resultImage, .intro-image {
-    width: 150px;
+    width: 90%;
+    max-width: 450px;
   }
 
   #resultTitle {
@@ -106,7 +107,8 @@ div {
   }
 
   #resultImage, .intro-image {
-    width: 220px;
+    width: 90%;
+    max-width: 600px;
   }
 
   #resultTitle {

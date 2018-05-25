@@ -38,13 +38,13 @@ var app = {
 	initResult(state, couponLink) {
 		if (state == 'win') {
 			document.getElementById('resultTitle').innerHTML = "おめでとうございます！";
-			document.getElementById('resultDescription').innerHTML = "カルビー じゃがりこ サラダが当たりました。";
+			document.getElementById('resultDescription').innerHTML = "サラダスムージーが当たりました。";
 			if (user.isWanderer) {
 				document.getElementById('couponLink').style.display = 'none';
 				document.getElementById('resultInstruction').style.display = 'none;'
 			}
 			else {
-				document.getElementById('resultInstruction').innerHTML = "クーポンを受け取って、セブン-イレブンで引き換えてください";
+				document.getElementById('resultInstruction').innerHTML = "クーポンを受け取って、ファミリーマートで引き換えてください";
 			}
 
 			if (couponLink) {
@@ -78,7 +78,7 @@ var app = {
 						user.messageTwitter(message);
 
 						if (user.info.id.indexOf('@') > -1) { // login via email
-		        	var emailContent = '<head><meta charset="utf-8"></head><div style="text-align:center;font-weight:600;color:#FF4244;font-size:28px;">おめでとうございます</div><br><br><div style="text-align:center;font-weight:600;">綾鷹クーポンが当たりました！</div><a href="' + response.data.couponLink + '" target="_blank" style="text-decoration:none;"><button style="display:block;margin:20px auto;margin-bottom:40px;border-radius:5px;background-color:#E54C3C;border:none;color:white;width:200px;height:50px;font-weight:600;">クーポンを受取る</button></a>';
+		        	var emailContent = '<head><meta charset="utf-8"></head><div style="text-align:center;font-weight:600;color:#FF4244;font-size:28px;">おめでとうございます</div><br><br><div style="text-align:center;font-weight:600;">クーポンが当たりました！</div><a href="' + response.data.couponLink + '" target="_blank" style="text-decoration:none;"><button style="display:block;margin:20px auto;margin-bottom:40px;border-radius:5px;background-color:#E54C3C;border:none;color:white;width:200px;height:50px;font-weight:600;">クーポンを受取る</button></a>';
 	        	  user.sendEmail(user.info.id, 'FamilyMart Coupon Link', emailContent);
 						}
 						// user.passResult(user.info.id, flag, user.source, response.data.couponLink);
