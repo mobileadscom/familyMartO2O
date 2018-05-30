@@ -1,12 +1,18 @@
 import axios from 'axios';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 import firebaseConfig from './firebaseConfig';
 firebase.initializeApp(firebaseConfig);
 
 var domain = 'https://www.mobileads.com';
 // var domain = 'http://localhost:8080';
 var functionsDomain = 'https://us-central1-familymarto2odemo.cloudfunctions.net/twitter';
+
+// firestore
+var db = firebase.firestore();
+const settings = {timestampsInSnapshots: true};
+db.settings(settings);
 
 var campaignId = 'ca8ca8c34a363fa07b2d38d007ca55c6';
 var adUserId = '4441';
@@ -35,7 +41,38 @@ var user = {
         id: userId
       }
     });*/
+
     return new Promise(function(resolve, reject) {
+    	var found = false;
+    	var userObject = {};
+			db.collection("users").get().then((querySnapshot) => {
+		    querySnapshot.forEach((doc) => {
+		      if (doc.data().id == userId) {
+		      	found = true;
+		      	userObject = doc.data();
+		      }
+		    });
+				
+				if (found) {
+					resolve({
+						data: {
+							message: "retrieved.",
+							user: userObject,
+							status: true
+						}
+					});
+				}
+				else {
+					resolve({
+						data: {
+							message: "not registered.",
+							status: false
+						}
+					});
+				}
+		  });
+    });
+    /*return new Promise(function(resolve, reject) {
 			var localUser = [];
 			if (typeof(Storage) !== "undefined") {
 				if (window.localStorage.localUser) {
@@ -82,13 +119,63 @@ var user = {
 					}
 				})
 			}
-    });
+    });*/
 	},
 	register: function(userId) {
 		// var regForm = new FormData();
   //   regForm.append('id', userId);
   //   return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+			
 		return new Promise(function(resolve, reject) {
+			var isRegistered = false;
+			var userObject = {};
+			db.collection("users").get().then((querySnapshot) => {
+		    querySnapshot.forEach((doc) => {
+		      if (doc.data().id == userId) {
+		      	isRegistered = true;
+		      	userObject = doc.data();
+		      }
+		    });
+
+				if (!isRegistered) {
+					db.collection('users').add({
+						id: userId,
+						couponLink: '',
+						Answers: '{}',
+						noQuestionAnswered: 0,
+						state: '-'
+					}).then((docRef) => {
+				    resolve({
+							data: {
+								message: "registration success.",
+								status: true
+							}
+						});
+					})
+					.catch((error) => {
+						reject({
+							data: {
+								message: 'error',
+								status: false
+							}
+						});
+					});
+				}
+				else {
+					resolve({
+						data: {
+							message: "user exist.",
+							user: userObject,
+							status: false
+						}
+					});
+				}
+			});
+		});
+
+
+
+		/*return new Promise(function(resolve, reject) {
 			var localUser = [];
 			if (typeof(Storage) !== "undefined") {
 				if (window.localStorage.localUser) {
@@ -136,7 +223,7 @@ var user = {
 					}
 				});
 		  }   	
-    });
+    });*/
 	},
 	trackRegister: function(userId) {
     // track as impression
@@ -206,7 +293,55 @@ var user = {
   //   markForm.append('couponGroup', group);
   //   markForm.append('source', source);
   //   return axios.post(domain + '/api/coupon/softbank/mark_user', markForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-     return new Promise(function(resolve, reject) {
+    
+		return new Promise(function(resolve, reject) {
+			var found = false;
+    	var userObject = {};
+    	var docId = '';
+			db.collection("users").get().then((querySnapshot) => {
+		    querySnapshot.forEach((doc) => {
+		      if (doc.data().id == userId) {
+		      	found = true;
+		      	docId = doc.id;
+		      	userObject = doc.data();
+		      }
+		    });
+
+		    if (found) {
+					db.collection("users").doc(docId).update({
+					  state: 'win',
+					  couponLink: 'https://rmarepo.richmediaads.com/o2o/familymart/demo/coupon.html'
+					})
+					.then(() => {
+						 resolve({
+							data: {
+								couponLink: "https://rmarepo.richmediaads.com/o2o/familymart/demo/coupon.html",
+								message: "marked.",
+								status:true
+							}
+						});
+					})
+					.catch((error) => {
+						reject({
+							data: {
+								message: "error during mark",
+								status:true
+							}
+						});
+					});
+		    }
+		    else {
+		    	reject({
+						data: {
+							message: 'user not found',
+							status: false
+						}
+					});
+		    }
+		  });
+		});
+
+    /*return new Promise(function(resolve, reject) {
 			var localUser = [];
 			if (typeof(Storage) !== "undefined") {
 				if (window.localStorage.localUser) {
@@ -251,7 +386,7 @@ var user = {
 					}
 				});
 		  } 
-		});
+		});*/
 	},
 	trackWin: function(userId) {
 		if (window.location.hostname.indexOf('localhost') < 0) {
@@ -276,6 +411,52 @@ var user = {
 	 //  markForm.append('source', source);
   //   return axios.post(domain + '/api/coupon/softbank/mark_user', markForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
 		return new Promise(function(resolve, reject) {
+			var found = false;
+    	var userObject = {};
+			var docId = '';
+			db.collection("users").get().then((querySnapshot) => {
+		    querySnapshot.forEach((doc) => {
+		      if (doc.data().id == userId) {
+		      	found = true;
+		      	docId = doc.id;
+		      	userObject = doc.data();
+		      }
+		    });
+
+		    if (found) {
+					db.collection("users").doc(docId).update({
+					  state: 'lose',
+					})
+					.then(() => {
+						 resolve({
+							data: {
+								message: "marked.",
+								status:true
+							}
+						});
+					})
+					.catch((error) => {
+						reject({
+							data: {
+								message: "error during mark",
+								status:true
+							}
+						});
+					});
+		    }
+		    else {
+		    	reject({
+						data: {
+							message: 'user not found',
+							status: false
+						}
+					});
+		    }
+		  });
+		});
+
+
+		/*return new Promise(function(resolve, reject) {
 			var localUser = [];
 			if (typeof(Storage) !== "undefined") {
 				if (window.localStorage.localUser) {
@@ -318,7 +499,7 @@ var user = {
 					}
 				});
 		  } 
-		});
+		});*/
 	},
 	passResult: function(userId, flag, source, couponLink) { // flag: 1 = win, 0 = lose
 		var psForm = new FormData();

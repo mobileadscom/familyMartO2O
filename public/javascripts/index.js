@@ -219,6 +219,7 @@ var app = {
         }
         else if (response.data.message == 'user exist.') {
         	user.info = response.data.user;
+        	this.enableSaveAnswer();
         	this.continue();
 					modal.closeAll();
         }
@@ -351,6 +352,7 @@ var app = {
 	enableSaveAnswer: function() {
     /* Auto save answer for every questions*/
 	  var saveBtns = document.getElementsByClassName('saveQuestion');
+	  console.log('enableSaveAnswer');
 	  for (var s = 0; s < saveBtns.length; s++ ) {
 	  	saveBtns[s].addEventListener('click', (e) => {
 	  		if (typeof(Storage) !== "undefined") {
@@ -422,6 +424,9 @@ var app = {
 	    	text: '45歳〜49歳'
 	    }, {
 	    	value: '50歳〜54歳',
+	    	text: '50歳〜54歳'
+	    }, {
+	    	value: '55歳〜59歳',
 	    	text: '55歳〜59歳'
 	    }, {
 	    	value: '60歳以上',
