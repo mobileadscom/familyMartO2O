@@ -52,7 +52,7 @@ div {
 
   #resultImage, .intro-image {
     width: 90%;
-    max-width: 450px;
+    max-width: 250px;
   }
 
   #resultTitle {
@@ -60,6 +60,9 @@ div {
     margin-top: 20px;
   }
 
+  #resultDescription {
+    font-weight: 600;
+  }
 
   #resultDescription, #resultInstruction {
     font-size: 16px;
@@ -108,7 +111,7 @@ div {
 
   #resultImage, .intro-image {
     width: 90%;
-    max-width: 600px;
+    max-width: 300px;
   }
 
   #resultTitle {
@@ -116,7 +119,7 @@ div {
     margin-top: 30px;
   }
 
-  #resultDescription, #resultInstruction {
+  #resultDescription {
     font-size: 20px;
   }
 }
@@ -396,6 +399,27 @@ button:hover .right:after {
   display: block;
   text-decoration: none;
   margin-top: 20px;
+}
+
+#couponInfo {
+  margin: 30px auto 20px;
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #19AE48;
+  border-radius: 4px;
+  max-width: 360px;
+  font-weight: 600;
+}
+
+.bullets-wrapper {
+  margin: auto;
+  max-width: 320px;
+}
+
+.bullets-wrapper ol {
+  text-align: left;
+  margin-top: 0px;
+  padding-left: 25px;
 }
 
 .loader {

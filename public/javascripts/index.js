@@ -38,10 +38,12 @@ var app = {
 	initResult(state, couponLink) {
 		if (state == 'win') {
 			document.getElementById('resultTitle').innerHTML = "おめでとうございます！";
+			document.getElementById('resultTitle').style.color = '#0193DD';
 			document.getElementById('resultDescription').innerHTML = "サラダスムージーが当たりました。";
 			if (user.isWanderer) {
 				document.getElementById('couponLink').style.display = 'none';
 				document.getElementById('resultInstruction').style.display = 'none;'
+				document.getElementById('couponInfo').style.display = 'none';
 			}
 			else {
 				document.getElementById('resultInstruction').innerHTML = "クーポンを受け取って、ファミリーマートで引き換えてください";
@@ -55,9 +57,13 @@ var app = {
 			}
 		}
 		else {
-			document.getElementById('resultTitle').innerHTML = "残念！<br>ハズレです";
+			document.getElementById('resultTitle').innerHTML = "残念！";
+			document.getElementById('resultTitle').style.color = 'red';
+			document.getElementById('resultDescription').innerHTML = 'はずれ';
+			document.getElementById('resultInstruction').innerHTML = 'ご参加頂きありがとうございました。';
 			document.getElementById('resultImage').style.display = 'none';
 			document.getElementById('couponLink').style.display = 'none';
+			document.getElementById('couponInfo').style.display = 'none';
 		}
 	},
 	processResult() {

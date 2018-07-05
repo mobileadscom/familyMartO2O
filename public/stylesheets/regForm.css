@@ -1,3 +1,43 @@
+@media( min-width: 1px) {
+  #regMsg {
+    font-size: 14px;
+  }
+
+  .campaignInfo {
+    max-width: 360px;
+    margin: 15px auto;
+    border: 1px solid #19AE48;
+    border-radius: 4px;
+  }
+  
+  .regInstruction {
+    max-width: 360px; 
+    margin: auto; 
+    text-align: left;
+    margin-bottom: 15px;
+  }
+}
+
+@media( min-width: 480px) {
+  #regMsg {
+    font-size: 16px;
+  }
+
+  .campaignInfo {
+    max-width: 405px;
+    margin: 15px auto;
+    border: 1px solid #19AE48;
+    border-radius: 4px;
+  }
+  
+  .regInstruction {
+    max-width: 405px; 
+    margin: auto; 
+    text-align: left;
+    margin-bottom: 15px;
+  }
+}
+
 #formSecWrapper {
     position: relative;
     width: 100%;
@@ -71,7 +111,7 @@
   border: none;
   color: white;
   padding: 6px 15px;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 6px;
   width: 150px;
   margin-top: 7px;
