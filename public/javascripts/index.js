@@ -495,41 +495,47 @@ var app = {
 
 	  this.q[4] = new singleAnswerQuestion({
 	  	wrapper: document.getElementById('q4'),
-	  	question: '<span class="red">QUESTION 4</span><br>スムージーを飲んだことはありますか？',
+	  	question: '<span class="red">QUESTION 4</span><br>あなたはスムージを飲んだことがありますか？',
 	  	answers: [{
-	    	value: '飲んだことがある。',
-	    	text: '飲んだことがある。',
+	    	value: '毎日飲む',
+	    	text: '毎日飲む',
 	    }, {
-	    	value: '飲んだことはないが、飲んでみたいと思う。',
-	    	text: '飲んだことはないが、飲んでみたいと思う。'
+	    	value: '週4日以上のむ',
+	    	text: '週4日以上のむ'
 	    }, {
-	    	value: '飲んだことがない。',
-	    	text: '飲んだことがない。'
+	    	value: '時々飲む',
+	    	text: '時々飲む'
+	    }, {
+	    	value: 'めったに飲まない',
+	    	text: '飲んだことがない'
 	    }],
 	    nextBtn: document.getElementById('toQ5')
 	  });
 
 	  this.q[5] = new singleAnswerQuestion({
 	  	wrapper: document.getElementById('q5'),
-	  	question: '<span class="red">QUESTION 5</span><br>コンビニにいく頻度を教えてください。',
+	  	question: '<span class="red">QUESTION 5</span><br>スムージを買うとしたらどちらで購入しますか？',
 	  	answers: [{
-	    	value: 'ほぼ毎日',
-	    	text: 'ほぼ毎日',
+	    	value: 'セブン・イレブン',
+	    	text: 'セブン・イレブン',
 	    }, {
-	    	value: '週４〜５回',
-	    	text: '週４〜５回'
+	    	value: 'ローソン',
+	    	text: 'ローソン'
 	    }, {
-	    	value: '週２〜３回',
-	    	text: '週２〜３回'
+	    	value: 'ファミリーマート/サークルK/サンクス',
+	    	text: 'ファミリーマート/サークルK/サンクス'
 	    }, {
-	    	value: '週１〜２回',
-	    	text: '週１〜２回'
+	    	value: 'その他のコンビニ',
+	    	text: 'その他のコンビニ'
 	    }, {
-	    	value: '隔週程度',
-	    	text: '隔週程度'
+	    	value: 'スーパー等その他の小売店',
+	    	text: 'スーパー等その他の小売店'
 	    }, {
-	    	value: '月１回未満',
-	    	text: '月１回未満'
+	    	value: 'カフェなど外食販売店',
+	    	text: 'カフェなど外食販売店'
+	    }, {
+	    	value: '自宅でつくる',
+	    	text: '自宅でつくる'
 	    }],
 	    nextBtn: document.getElementById('toQ6')
 	  });
@@ -614,7 +620,7 @@ var app = {
         height: vidHeight.toString(),
         width: vidWidth.toString(),
         playerVars: {'rel': 0,'showinfo': 0, 'controls': 0, 'playsinline': 1},
-        videoId: 'OcoNMTSu8s8',
+        videoId: 'Hml0OM70H7E',
         events: {
           'onStateChange': (event) => {
             if (event.data == YT.PlayerState.ENDED) {
