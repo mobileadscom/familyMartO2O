@@ -8,8 +8,97 @@
 <body>    
   <header>
   	<div class="banner">
-      <img src="img/header-main.png" />
+      <img src="img/header-main2.png" />
   	</div>
   </header>
+  <div style="padding: 0px 15px;">
+  	<div id="couponNumber">
+	  	123456
+  	</div>
+	  <div id="couponInfo">
+	  	<span style="color: #19AE48;">有効期限：</span>
+	  	<br>2018年8月6日まで
+			<br><span style="color: #19AE48;">交換場所：</span>
+			<br>東京23区内ファミリーマート店舗				 
+			<br><br><span style="color: #19AE48;">商品交換方法:</span>
+			<div class="bullets-wrapper">
+				<ol>
+					<li>Famiポート トップメニュー（トップ画面）で「クーポン券」にタッチ</li>
+					<li>シリアル番号をお持ちの方はこちら」ボタンをタッチ</li>
+					<li>クーポン発券用シリアル番号を入力</li>
+					<li>サービス内容を確認</li>
+					<li>クーポン券を発券</li>
+					<li>クーポンをレジまでお持ち下さい。</li>
+				</ol>
+			</div>
+	  </div>
+	</div>
 </body>
 </html>
+
+<style type="text/css">
+@media( min-width: 1px) {
+  .banner {
+    height: 65px;
+  }
+}
+
+@media( min-width: 996px) {
+  .banner {
+    height: 90px;
+  }
+}
+
+.banner {
+  width: 100%;
+  text-align: left;
+  background-image: url('img/header-bg2.png');
+  background-size: auto 100%;
+  background-repeat: repeat-x;
+}
+
+.banner img {
+  height: 100%;
+  display: block;
+  margin: auto;
+}
+
+body {
+	margin: 0px;
+  text-align: center;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial;
+}
+
+#couponNumber {
+	margin: 30px auto 20px;
+	color: #0193DD;
+	padding: 5px;
+	border-radius: 4px;
+	border: 1px solid #0193DD;
+	font-size: 28px;
+	max-width: 360px;
+}
+
+#couponInfo {
+  margin: 30px auto 20px;
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid #19AE48;
+  border-radius: 4px;
+  max-width: 360px;
+  font-weight: 600;
+}
+
+.bullets-wrapper {
+  margin: auto;
+  max-width: 320px;
+}
+
+.bullets-wrapper ol {
+  text-align: left;
+  margin-top: 0px;
+  padding-left: 25px;
+}
+</style>
