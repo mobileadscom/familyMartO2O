@@ -543,10 +543,10 @@ var app = {
 	    	value: '自宅でつくる',
 	    	text: '自宅でつくる'
 	    }],
-	    nextBtn: document.getElementById('toQ6')
+	    nextBtn: document.getElementById('toApply')
 	  });
 
-	  this.q[6] = new multipleAnswerQuestion({
+/*	  this.q[6] = new multipleAnswerQuestion({
 	  	wrapper: document.getElementById('q6'),
 	  	question: '<span class="red">QUESTION 6</span><br>いつも行くコンビニを教えてください',
 	  	answers: [{
@@ -569,7 +569,7 @@ var app = {
 	      type: 'text'
 	    }],
 	    nextBtn: document.getElementById('toApply')
-	  });
+	  });*/
 	  /* ==== Questions End ==== */
 	},
 	init: function() {

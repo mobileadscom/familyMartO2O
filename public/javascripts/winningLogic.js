@@ -2,18 +2,18 @@ import coupon from './coupon';
 
 var winningLogic = {
 	winLogic: {
-    '6': {
+/*    '6': {
       value: ['セブン-イレブン', 'ローソン'],
       priority: [2, 3] // smaller number means higher priority.
-    }
+    }*/
 		/*'5': {
 			value: ['ほぼ毎日', '週４〜５回', '週２〜３回'],
 			priority: [2, 3, 4] 
-		},
-		'7': {
-			value: 'セブン-イレブン',
-			priority: 5
-		}*/
+		},*/
+		'5': {
+			value: 'ファミリーマート/サークルK/サンクス',
+			priority: 2
+		}
 	},
 	loseLogic: {
 		/*'6': {
