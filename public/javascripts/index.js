@@ -597,6 +597,35 @@ var app = {
 	  });*/
 	  /* ==== Questions End ==== */
 	},
+	start: function(delay) {
+		if (!this.params.userId || !this.params.source) {
+		  user.isWanderer = true;
+		  var t = delay || 100;
+	    setTimeout(() => {
+	    	if (localStorage.getItem('localAnswers')) { // this browser already have user
+					user.isWanderer = false;
+					user.source = this.params.source;
+					user.loadLocal();
+					this.enableSaveAnswer();
+					this.continue();
+				}
+				else {
+			    this.pages.toPage('regPage');
+			    // this.pages.toPage('termsPage');
+			  }
+		  }, t);
+	  }
+	  else {
+			if (localStorage.getItem('localAnswers')) { // for single user per browser
+				user.loadLocal();
+				this.enableSaveAnswer();
+				this.continue();
+			}
+			else {
+				this.initUser(this.params.userId, false);
+			}
+		}
+	},
 	init: function() {
 		var vidWidth = document.getElementById('vid').clientWidth;
     var vidHeight = document.getElementById('vid').clientHeight;
@@ -624,31 +653,18 @@ var app = {
 	  miniSelect.init('miniSelect');
 
 	  /* User Info */
-	  if (!this.params.userId || !this.params.source) {
-		  user.isWanderer = true;
-	    setTimeout(() => {
-	    	if (localStorage.getItem('localAnswers')) { // this browser already have user
-					user.isWanderer = false;
-					user.source = this.params.source;
-					user.loadLocal();
-					this.enableSaveAnswer();
-					this.continue();
-				}
-				else {
-			    this.pages.toPage('regPage');
-			    // this.pages.toPage('termsPage');
-			  }
-		  }, 1000);
-	  }
-	  else {
-			if (localStorage.getItem('localAnswers')) { // for single user per browser
-				user.loadLocal();
-				this.enableSaveAnswer();
-				this.continue();
-			}
-			else {
-				this.initUser(this.params.userId, false);
-			}
+	  var localUser = localStorage.getItem('localUser');
+		if (localUser) {
+		  user.get(localUser).then((response) => {
+				console.log(response);
+	    	if (response.data.status == false) { // user is not registered
+		    	user.clearLocal(); // db has been cleared, clear local storage also
+	    	}
+			  this.start();
+	    });
+		}
+		else {
+			this.start(1000);
 		}
 
     /* get coupons */
