@@ -143,6 +143,24 @@ var user = {
 			psForm.append('coupon_url', encodeURIComponent(couponLink));
 		}
 		return axios.post(domain + '/api/coupon/softbank/api_call', psForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+	},
+	saveLocal: function(userId, couponLink, state) {
+		window.localStorage.setItem('localUser', userId);
+		window.localStorage.setItem('localCoupon', couponLink);
+		window.localStorage.setItem('localState', state);
+	},
+	loadLocal: function() {
+		if (window.localStorage.getItem('localUser')) {
+			user.info.id = window.localStorage.getItem('localUser');
+			user.info.couponLink = window.localStorage.getItem('localUser');
+			user.info.state = window.localStorage.getItem('localState');
+		}
+	},
+	clearLocal: function() {
+		window.localStorage.removeItem('localUser');
+		window.localStorage.removeItem('localCoupon');
+		window.localStorage.removeItem('localState');	
+		window.localStorage.removeItem('localAnswers');	
 	}
 };
 

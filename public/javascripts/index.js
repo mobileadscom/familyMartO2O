@@ -79,6 +79,7 @@ var app = {
   			user.win(user.info.id, group, user.source).then((response) => {
 					console.log(response);
 					if (response.data.couponLink) {
+						user.saveLocal(user.info.id, response.data.couponLink, 'win');
 						this.initResult('win', response.data.couponLink);
 						var message = '綾鷹クーポンが当たりました！ ' + response.data.couponLink;
 						
@@ -94,6 +95,7 @@ var app = {
 					}
 					else {
 						this.initResult('lose');
+						user.saveLocal(user.info.id, '', 'lose');
 						// user.passResult(user.info.id, flag, user.source);
 					}
   			}).catch((error) => {
@@ -108,6 +110,7 @@ var app = {
   			}).catch((error) => {
   				console.log(error);
   			});
+  			user.saveLocal(user.info.id, '', 'lose');
   			this.initResult('lose');
   		}
 
@@ -129,20 +132,33 @@ var app = {
 		if (localStorage.getItem('localAnswers')) {
 			answerJson = localStorage.getItem('localAnswers');
 		}
-		var localAnswers = JSON.parse(answerJson);
-		var userAnswers = [];
 		var noQuestionAnswered = 0;
+		// for multiple user per browser
+		/*var userAnswers = [];
+		var localAnswers = JSON.parse(answerJson);
 		if (localAnswers) {
 			if (localAnswers.hasOwnProperty(user.info.id)) {
 				userAnswers = localAnswers[user.info.id];
 				noQuestionAnswered = userAnswers.length - 1;
 			}
 		}
-		
+
 		if (!userAnswers) {
 			userAnswers = JSON.parse(user.info.Answers);
 			noQuestionAnswered = user.info.noQuestionAnswered;
+		}*/
+		// for multiple user per browser END
+
+		// for single user per browser
+		var userAnswers = JSON.parse(answerJson);
+		if (userAnswers) {
+			noQuestionAnswered = userAnswers.length - 1;
 		}
+		else {
+			userAnswers = JSON.parse(user.info.Answers);
+			noQuestionAnswered = user.info.noQuestionAnswered;
+		}
+		// for single user per browser END
 
 		/*apply answer to answered question */
 		for (var w = 1; w < this.q.length; w++) {
@@ -320,6 +336,7 @@ var app = {
 						user.isWanderer = false;
 						user.info.id = userId;
 						user.source = this.params.source;
+						user.saveLocal(userId, '', '-'); // for single user per browser
 						if (isTwitter) {
 							this.checkTwitter();
 						}
@@ -342,8 +359,13 @@ var app = {
     	else { // user is registered
     		user.isWanderer = false;
 				user.info = response.data.user;
+				if (window.localStorage.getItem('localAnswers')) { // for single user per browser
+					user.loadLocal();
+				}
+				else {
+					user.saveLocal(userId, response.data.user.couponLink, response.data.user.state); 
+				}
 				user.source = this.params.source;
-				
 				if (isTwitter) {
 					this.checkTwitter();
 				}
@@ -365,24 +387,27 @@ var app = {
 	  for (var s = 0; s < saveBtns.length; s++ ) {
 	  	saveBtns[s].addEventListener('click', (e) => {
 	  		if (typeof(Storage) !== "undefined") {
-					var answerJson = '{}';
+	  			// for multiple user per browser
+					/*var answerJson = '{}';
 	  			if (localStorage.getItem('localAnswers')) {
 	  				answerJson = localStorage.getItem('localAnswers');
 	  			}
-	  			var localAnswers = JSON.parse(answerJson);
+	  			var localAnswers = JSON.parse(answerJson); 
 	  			if (!localAnswers) {
-	  				localAnswers = {};
-		  		}
+	  				localAnswers = {}; 
+		  		}*/
+		  		// for multiple user per browser END
 			  	var qArray = [];
 			  	for (var n = 1; n < this.q.length; n++) {
 						if (this.q[n].selectedAnswer) {
 							qArray[n] = this.q[n].selectedAnswer;
 						}
 			  	}
-			  	localAnswers[user.info.id] = qArray;
-			  	localStorage.setItem('localAnswers', JSON.stringify(localAnswers));
+			  	// localAnswers[user.info.id] = qArray; // for multiple user per browser
+			  	// localStorage.setItem('localAnswers', JSON.stringify(localAnswers)); // for multiple user per browser
+			  	localStorage.setItem('localAnswers', JSON.stringify(qArray)); // for single user per browser
 	  		}
-	  		var qNo = parseInt(e.target.dataset.question);
+	  		// var qNo = parseInt(e.target.dataset.question);
 	  		// user.trackAnswer(this.params.userId, qNo, this.q[qNo].selectedAnswer);
 			  /*user.saveAnswer(user.info.id, qNo, this.q[qNo].selectedAnswer).then((response) => {
 			  	console.log(response);
@@ -602,12 +627,28 @@ var app = {
 	  if (!this.params.userId || !this.params.source) {
 		  user.isWanderer = true;
 	    setTimeout(() => {
-		    this.pages.toPage('regPage');
-		    // this.pages.toPage('termsPage');
+	    	if (localStorage.getItem('localAnswers')) { // this browser already have user
+					user.isWanderer = false;
+					user.source = this.params.source;
+					user.loadLocal();
+					this.enableSaveAnswer();
+					this.continue();
+				}
+				else {
+			    this.pages.toPage('regPage');
+			    // this.pages.toPage('termsPage');
+			  }
 		  }, 1000);
 	  }
 	  else {
-			this.initUser(this.params.userId, false);
+			if (localStorage.getItem('localAnswers')) { // for single user per browser
+				user.loadLocal();
+				this.enableSaveAnswer();
+				this.continue();
+			}
+			else {
+				this.initUser(this.params.userId, false);
+			}
 		}
 
     /* get coupons */
