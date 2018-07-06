@@ -1,5 +1,5 @@
 @media( min-width: 1px) {
-  #regMsg {
+  #regMsg, #terms1Msg {
     font-size: 14px;
   }
 
@@ -19,7 +19,7 @@
 }
 
 @media( min-width: 480px) {
-  #regMsg {
+  #regMsg, #terms1Msg {
     font-size: 16px;
   }
 
@@ -110,7 +110,7 @@
   display: none;
 }
 
-#regButtons button, #submitBtn {
+#regButtons button, #submitBtn, #termsPage1 button {
   background-color: #00bd4f;
   border: none;
   color: white;
@@ -122,7 +122,7 @@
   margin-bottom: 5px;
 }
 
-#regButtons button:hover, #submitBtn:hover {
+#regButtons button:hover, #submitBtn:hover, #termsPage1 button:hover {
   cursor: pointer;
   background-color: #00984f;
 }

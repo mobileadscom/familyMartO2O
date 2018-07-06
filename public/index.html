@@ -49,7 +49,27 @@
 	      <br>LOADING
 	    </div>
 	  </div>
-	  <div id="termsPage" class="page">
+	  <div id="termsPage1" class="page">
+	  	<div class="msg-wrapper" id="terms1Msg">
+		  	<span style="color: #0193DD; font-size: 16px;">アンケートに答えて商品をGet!
+				<br>抽選で3,000名様に商品をプレゼント</span>
+				<div class="campaignInfo">
+					<span style="color: #19AE48;">キャンペーン期間：</span><br>2018年7月24日〜8月6日まで
+					<br><br><span style="color: #19AE48;">商品引換期間：</span><br>2018年7月24日〜8月6日まで
+					<br><br><span style="color: #19AE48;">交換店舗：</span><br>東京23区ないファミリーマート店舗
+		    </div>
+		    <div class="regInstruction">
+			    キャンペーンへの参加はお一人様一回限りとなります。
+		      <br>下記どちらかに登録してお進みください。
+		    </div>
+		    <div style="">
+		    	利用規約に同意してお進みください。
+		    	<br>
+			    <button id="toTerms2" class="pageBtn" data-target="termsPage2">利用規約</button>
+			  </div>
+		  </div>
+	  </div>
+	  <div id="termsPage2" class="page">
 	    <div class="msg-wrapper">
 		    利用規約に同意ください。
 	    </div>
@@ -186,19 +206,10 @@
 	    <button id="startSurvey" class="pageBtn next-btn" data-target="regPage" disabled>同意する </button>
 	  </div>
 	  <div id="regPage" class="page">
-	    <div class="msg-wrapper" id="regMsg">
-				<span style="color: #0193DD; font-size: 16px;">アンケートに答えて商品をGet!
-				<br>抽選で3,000名様に商品をプレゼント</span>
-				<div class="campaignInfo">
-					<span style="color: #19AE48;">キャンペーン期間：</span><br>2018年7月24日〜8月6日まで
-					<br><br><span style="color: #19AE48;">商品引換期間：</span><br>2018年7月24日〜8月6日まで
-					<br><br><span style="color: #19AE48;">交換店舗：</span><br>東京23区ないファミリーマート店舗
-		    </div>
-		    <div class="regInstruction">
-			    キャンペーンへの参加はお一人様一回限りとなります。
-		      <br>下記どちらかに登録してお進みください。
-		    </div>
-	    </div>
+	  	<div class="msg-wrapper" id="regMsg" style="margin-bottom: 15px;">
+	  		らかを登録して登録して
+				<br>アンケートにお進みください。
+	  	</div>
 	    <div id="regButtons">
 	      <button class="registerBtn modalOpener shadow-1" id="regEmail" data-target="regModal">Email</button>
 	      <div></div>

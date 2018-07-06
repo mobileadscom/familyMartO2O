@@ -348,11 +348,11 @@ var app = {
 	    		}).catch((err) => {
 	    			user.isWanderer = true;
 	    			console.log(err);
-	    			this.pages.toPage('termsPage');
+	    			this.pages.toPage('termsPage1');
 	    		});
 	    	}
 	    	else {
-	    		this.pages.toPage('termsPage');
+	    		this.pages.toPage('termsPage1');
 	    		this.enableSaveAnswer();
 	    	}
     	}
@@ -377,7 +377,7 @@ var app = {
     }).catch((error) => {
     	user.isWanderer = true;
 			console.log(error);
-			this.pages.toPage('termsPage');
+			this.pages.toPage('termsPage1');
     });
 	},
 	enableSaveAnswer: function() {
@@ -611,7 +611,7 @@ var app = {
 				}
 				else {
 			    // this.pages.toPage('regPage');
-			    this.pages.toPage('termsPage');
+			    this.pages.toPage('termsPage1');
 			  }
 		  }, t);
 	  }
