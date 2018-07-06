@@ -185,7 +185,7 @@ var app = {
 				}
 			}
 			else {
-				this.pages.toPage('termsPage');
+				this.pages.toPage('page1');
 			}
 		}
 	},
@@ -352,7 +352,7 @@ var app = {
 	    		});
 	    	}
 	    	else {
-	    		this.pages.toPage('regPage');
+	    		this.pages.toPage('termsPage');
 	    		this.enableSaveAnswer();
 	    	}
     	}
@@ -602,7 +602,7 @@ var app = {
 		  user.isWanderer = true;
 		  var t = delay || 100;
 	    setTimeout(() => {
-	    	if (localStorage.getItem('localAnswers')) { // this browser already have user
+	    	if (localStorage.getItem('localUser')) { // this browser already have user
 					user.isWanderer = false;
 					user.source = this.params.source;
 					user.loadLocal();
@@ -610,13 +610,13 @@ var app = {
 					this.continue();
 				}
 				else {
-			    this.pages.toPage('regPage');
-			    // this.pages.toPage('termsPage');
+			    // this.pages.toPage('regPage');
+			    this.pages.toPage('termsPage');
 			  }
 		  }, t);
 	  }
 	  else {
-			if (localStorage.getItem('localAnswers')) { // for single user per browser
+			if (localStorage.getItem('localUser')) { // for single user per browser
 				user.loadLocal();
 				this.enableSaveAnswer();
 				this.continue();

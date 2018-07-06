@@ -49,66 +49,6 @@
 	      <br>LOADING
 	    </div>
 	  </div>
-	  <div id="regPage" class="page">
-	    <div class="msg-wrapper" id="regMsg">
-				<span style="color: #0193DD; font-size: 16px;">アンケートに答えて商品をGet!
-				<br>抽選で3,000名様に商品をプレゼント</span>
-				<div class="campaignInfo">
-					<span style="color: #19AE48;">キャンペーン期間：</span><br>2018年7月24日〜8月6日まで
-					<br><br><span style="color: #19AE48;">商品引換期間：</span><br>2018年7月24日〜8月6日まで
-					<br><br><span style="color: #19AE48;">交換店舗：</span><br>東京23区ないファミリーマート店舗
-		    </div>
-		    <div class="regInstruction">
-			    キャンペーンへの参加はお一人様一回限りとなります。
-		      <br>下記どちらかに登録してお進みください。
-		    </div>
-	    </div>
-	    <div id="regButtons">
-	      <button class="registerBtn modalOpener shadow-1" id="regEmail" data-target="regModal">Email</button>
-	      <div></div>
-	      <button class="registerBtn shadow-1" id="regTwitter">Twitter</button>
-	    </div>
-	    <div class="form-loader" id="regWorking"></div>
-	  </div>
-	  <div id="followPage" class="page">
-	    <div class="msg-wrapper">
-	      キャンペーンに参加するために当社Twitter をフォローしてください。
-	    </div>
-	    <br>
-	    <img src="images/follow.png" style="width: 150px;" id="followBtn"/>
-	    <div id="successFollow">
-	      成功！
-	    </div>
-	  </div>
-	  <!-- <div id="introPage" class="page">
-			<img class="intro-image" src="images/calbee.png" />
-			<div class="tnc-wrapper">	
-		    <div class="info">
-					<strong class="points-title">応募期間</strong>
-					<br>2018年 月 日から2018年 月 日まで
-					<br><br>
-					<strong class="points-title">概要</strong>
-					<br>アンケートを完了した方から抽選で500名さまに「カルビー じゃがりこ サラダ」が当たります。
-					<br><br>
-					<strong class="points-title">商品引き換え期間</strong>
-					<br>2018年6月23日(日）まで
-					<br><br>
-					<strong class="points-title">賞品</strong>
-					<br>カルビー じゃがりこ サラダ　1個
-					<br><br>
-					<strong class="points-title">受け取り場所</strong>
-					<br>セブン-イレブンでお受取りいただけます。
-					<br><a href="http://www.sej.co.jp/shop/index.html" target="_blank">詳細はコチラ</a>
-					<br><br>
-					<strong class="points-title">当選発表</strong>
-					<br>アンケート回答後、その場で当選が分かります。 また、当選した方にはTesTee・Powlのマイページにもお知らせします。
-					<br><br>
-					<strong class="points-title">引き換え方法</strong>
-					<br>当選画面・または上述のマイページにクーポンURLを記載しますので、 対象店舗にてお引き換えください。
-			  </div>
-			</div>
-		  <button id="toTerms" class="pageBtn next-btn" data-target="termsPage">NEXT <span class="right"></button>
-	  </div>  -->
 	  <div id="termsPage" class="page">
 	    <div class="msg-wrapper">
 		    利用規約に同意ください。
@@ -243,8 +183,68 @@
 		      <span class="checkmark"></span>
 		    </div>
 		</div>
-	    <button id="startSurvey" class="pageBtn next-btn" data-target="page1" disabled>同意する </button>
+	    <button id="startSurvey" class="pageBtn next-btn" data-target="regPage" disabled>同意する </button>
 	  </div>
+	  <div id="regPage" class="page">
+	    <div class="msg-wrapper" id="regMsg">
+				<span style="color: #0193DD; font-size: 16px;">アンケートに答えて商品をGet!
+				<br>抽選で3,000名様に商品をプレゼント</span>
+				<div class="campaignInfo">
+					<span style="color: #19AE48;">キャンペーン期間：</span><br>2018年7月24日〜8月6日まで
+					<br><br><span style="color: #19AE48;">商品引換期間：</span><br>2018年7月24日〜8月6日まで
+					<br><br><span style="color: #19AE48;">交換店舗：</span><br>東京23区ないファミリーマート店舗
+		    </div>
+		    <div class="regInstruction">
+			    キャンペーンへの参加はお一人様一回限りとなります。
+		      <br>下記どちらかに登録してお進みください。
+		    </div>
+	    </div>
+	    <div id="regButtons">
+	      <button class="registerBtn modalOpener shadow-1" id="regEmail" data-target="regModal">Email</button>
+	      <div></div>
+	      <button class="registerBtn shadow-1" id="regTwitter">Twitter</button>
+	    </div>
+	    <div class="form-loader" id="regWorking"></div>
+	  </div>
+	  <div id="followPage" class="page">
+	    <div class="msg-wrapper">
+	      キャンペーンに参加するために当社Twitter をフォローしてください。
+	    </div>
+	    <br>
+	    <img src="images/follow.png" style="width: 150px;" id="followBtn"/>
+	    <div id="successFollow">
+	      成功！
+	    </div>
+	  </div>
+	  <!-- <div id="introPage" class="page">
+			<img class="intro-image" src="images/calbee.png" />
+			<div class="tnc-wrapper">	
+		    <div class="info">
+					<strong class="points-title">応募期間</strong>
+					<br>2018年 月 日から2018年 月 日まで
+					<br><br>
+					<strong class="points-title">概要</strong>
+					<br>アンケートを完了した方から抽選で500名さまに「カルビー じゃがりこ サラダ」が当たります。
+					<br><br>
+					<strong class="points-title">商品引き換え期間</strong>
+					<br>2018年6月23日(日）まで
+					<br><br>
+					<strong class="points-title">賞品</strong>
+					<br>カルビー じゃがりこ サラダ　1個
+					<br><br>
+					<strong class="points-title">受け取り場所</strong>
+					<br>セブン-イレブンでお受取りいただけます。
+					<br><a href="http://www.sej.co.jp/shop/index.html" target="_blank">詳細はコチラ</a>
+					<br><br>
+					<strong class="points-title">当選発表</strong>
+					<br>アンケート回答後、その場で当選が分かります。 また、当選した方にはTesTee・Powlのマイページにもお知らせします。
+					<br><br>
+					<strong class="points-title">引き換え方法</strong>
+					<br>当選画面・または上述のマイページにクーポンURLを記載しますので、 対象店舗にてお引き換えください。
+			  </div>
+			</div>
+		  <button id="toTerms" class="pageBtn next-btn" data-target="termsPage">NEXT <span class="right"></button>
+	  </div>  -->
 	  <div id="page1" class="page">
 	  	<div id="q1" class="pageQuestion">
 	  	</div>
