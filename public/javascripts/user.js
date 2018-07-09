@@ -6,6 +6,7 @@ firebase.initializeApp(firebaseConfig);
 
 var domain = 'https://www.mobileads.com';
 // var domain = 'http://localhost:8080';
+var userCollection = 'testCol';
 var functionsDomain = 'https://us-central1-familymarto2odemo.cloudfunctions.net/twitter';
 
 var campaignId = 'ca8ca8c34a363fa07b2d38d007ca55c6';
@@ -30,16 +31,106 @@ var user = {
 		state: '-'
 	},
 	get: function(userId) {
-    return axios.get(domain + '/api/coupon/softbank/user_info', {
+		/* this is using the old mysql database. Not using Now */
+    /*return axios.get(domain + '/api/coupon/softbank/user_info', {
       params: {
         id: userId
       }
+    });*/
+
+    /* mongoDB */
+    return new Promise(function(resolve, reject) {
+    	var userQuery = JSON.stringify({
+				id: userId
+			});
+			axios.get('https://api.mobileads.com/mgd/q?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery))
+			.then((response) => {
+				if (response.data.length > 0) { //user already exist
+					resolve({
+						data: {
+							message: "retrieved.",
+							user: response.data[0],
+							status: true
+						}
+					});
+				}
+				else {
+					resolve({
+						data: {
+							message: "not registered.",
+							status: false
+						}
+					});
+				}
+			}).catch((error) => {
+				console.error(error);
+				reject({
+					data: {
+						message: 'error',
+						status: false
+					}
+				});
+			});
     });
 	},
 	register: function(userId) {
-		var regForm = new FormData();
-    regForm.append('id', userId);
-    return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+		/* this is using the old mysql database. Not using Now */
+		/*var regForm = new FormData();
+		regForm.append('id', userId);
+		return axios.post(domain + '/api/coupon/softbank/register', regForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });*/
+
+		/* mongoDB */
+		return new Promise(function(resolve, reject) {
+			var userQuery = JSON.stringify({
+				id: userId
+			});
+			axios.get('https://api.mobileads.com/mgd/q?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery))
+			.then((response) => {
+				if (response.data.length > 0) { //user already exist
+					resolve({
+						data: {
+							message: "user exist.",
+							user: response.data[0],
+							status: false
+						}
+					});
+				}
+				else {
+					var userJson = JSON.stringify({
+						id: userId,
+						couponLink: '',
+						Answers: '[]',
+						noQuestionAnswered: 0,
+						state: '-'
+					});
+					axios.post('https://api.mobileads.com/mgd/ins?col=' + userCollection + '&obj=' + encodeURIComponent(userJson))
+					.then((resp) => {
+						resolve({
+							data: {
+								message: "registration success.",
+								status: true
+							}
+						});
+					}).catch((err) => {
+						console.error(err);
+						reject({
+							data: {
+								message: 'error',
+								status: false
+							}
+						});
+					});
+				}
+			}).catch((error) => {
+				console.error(error);
+				reject({
+					data: {
+						message: 'error',
+						status: false
+					}
+				});
+			});
+		});
 	},
 	trackRegister: function(userId) {
     // track as impression
@@ -87,12 +178,32 @@ var user = {
       text: message
      });
 	},
-	saveAnswer: function(userId, questionNo, answer) {
-		var ansForm = new FormData();
+	saveAnswer: function(userId, answer) {
+		/* this is using the old mysql database. Not using Now */
+		/*var ansForm = new FormData();
     ansForm.append('id', userId);
     ansForm.append('questionNo', questionNo);
     ansForm.append('answer', answer)
-    return axios.post(domain + '/api/coupon/softbank/user_answer_save', ansForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+    return axios.post(domain + '/api/coupon/softbank/user_answer_save', ansForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });*/
+
+    /* mongoDB */
+    var userQuery = JSON.stringify({
+			id: userId
+		});
+
+		var updateAnswer = JSON.stringify({
+			Answers: answer,
+			noQuestionAnswered: answer.length - 1
+		});
+		console.log();
+    axios.post('http://api.mobileads.com/mgd/upd?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery) + '&uobj=' + encodeURIComponent(updateAnswer))
+    .then((response) => {
+			if (response.data.status == 'success') {
+				console.log('answers saved to database');
+			}
+    }).catch((error) => {
+			console.error(error);
+    });
 	},
 	trackAnswer: function(userId, questionNo, answer) {
 		if (window.location.hostname.indexOf('localhost') < 0) {

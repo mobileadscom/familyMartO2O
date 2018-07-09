@@ -10,6 +10,7 @@ import '../stylesheets/miniCheckbox.css';
 import '../stylesheets/modal.css';
 import '../stylesheets/regForm.css';
 
+import axios from 'axios';
 var app = {
 	pages: null, // array of pages
 	params: {}, // params in query string
@@ -409,11 +410,7 @@ var app = {
 	  		}
 	  		// var qNo = parseInt(e.target.dataset.question);
 	  		// user.trackAnswer(this.params.userId, qNo, this.q[qNo].selectedAnswer);
-			  /*user.saveAnswer(user.info.id, qNo, this.q[qNo].selectedAnswer).then((response) => {
-			  	console.log(response);
-			  }).catch((error) => {
-			  	console.log(error);
-			  });*/
+			  // user.saveAnswer(user.info.id, qArray);
 	  	})
 	 }
 	},
@@ -657,7 +654,7 @@ var app = {
 		if (localUser) {
 		  user.get(localUser).then((response) => {
 				console.log(response);
-	    	if (response.data.status == false) { // user is not registered
+	    	if (response.data.status == false && response.data.message != 'error') { // user is not registered
 		    	user.clearLocal(); // db has been cleared, clear local storage also
 	    	}
 			  this.start();
@@ -705,6 +702,11 @@ document.addEventListener('DOMContentLoaded', function() {
   modal.init();
   window.q = app.q;
   window.params = app.params;
+  axios.get('https://api.mobileads.com/mgd/q?col=testCol').then((resp) => {
+	console.log(resp);
+  }).catch((err) => {
+  	console.error(err);
+  })
 });
 
 export {
