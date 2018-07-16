@@ -103,7 +103,7 @@ var user = {
 						noQuestionAnswered: 0,
 						state: '-'
 					});
-					axios.post('https://api.mobileads.com/mgd/ins?col=' + userCollection + '&obj=' + encodeURIComponent(userJson))
+					axios.post('https://api.mobileads.com/mgd/insOne?col=' + userCollection + '&obj=' + encodeURIComponent(userJson))
 					.then((resp) => {
 						resolve({
 							data: {
