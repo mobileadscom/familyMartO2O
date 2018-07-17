@@ -7,6 +7,7 @@ firebase.initializeApp(firebaseConfig);
 var domain = 'https://www.mobileads.com';
 // var domain = 'http://localhost:8080';
 var userCollection = 'testCol';
+var couponCollection = 'testCoupons';
 var functionsDomain = 'https://us-central1-familymarto2odemo.cloudfunctions.net/twitter';
 
 var campaignId = 'ca8ca8c34a363fa07b2d38d007ca55c6';
@@ -195,8 +196,7 @@ var user = {
 			Answers: answer,
 			noQuestionAnswered: answer.length - 1
 		});
-		console.log();
-    axios.post('http://api.mobileads.com/mgd/upd?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery) + '&uobj=' + encodeURIComponent(updateAnswer))
+    axios.post('http://api.mobileads.com/mgd/updOne?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery) + '&uobj=' + encodeURIComponent(updateAnswer))
     .then((response) => {
 			if (response.data.status == 'success') {
 				console.log('answers saved to database');
@@ -214,12 +214,85 @@ var user = {
 	  }
 	},
 	win: function(userId, group, source) {
-		var markForm = new FormData();
-    markForm.append('id', userId);
-    markForm.append('state', 'win');
-    markForm.append('couponGroup', group);
-    markForm.append('source', source);
-    return axios.post(domain + '/api/coupon/softbank/mark_user', markForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+		return new Promise(function(resolve, reject) {
+			//get one unredeemed coupon
+			var couponQuery = JSON.stringify({
+				redeemed: false
+			})
+			axios.get('https://api.mobileads.com/mgd/qOne?col=' + couponCollection + '&qobj=' + encodeURIComponent(couponQuery)).then((response) => {
+				if (response.data.link) { // coupon found, redeem it
+					var uQuery = JSON.stringify({
+						_id: response.data._id
+					});
+					var updateCoupon = JSON.stringify({
+						redeemed: true,
+						owner: userId
+					});
+					
+					axios.post('http://api.mobileads.com/mgd/updOne?col=' + couponCollection + '&qobj=' + encodeURIComponent(uQuery) + '&uobj=' + encodeURIComponent(updateCoupon))
+					.then((resp) => {
+						if (resp.data.status == 'success') {
+							var userQuery = JSON.stringify({
+								id: userId
+							});
+
+							var updateState = JSON.stringify({
+								state: 'win',
+								couponLink: response.data.link
+							});
+
+						    axios.post('http://api.mobileads.com/mgd/updOne?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery) + '&uobj=' + encodeURIComponent(updateState))
+						    .then((res) => {
+						    	console.log(resp.data.status);
+									if (resp.data.status == 'success') {
+										console.log('success');
+										resolve({
+											data: {
+												couponLink: response.data.link,
+												message: "marked.",
+												status:true
+											}
+										});
+									}
+						    }).catch((err) => {
+									console.error(error);
+									reject({
+										data: {
+											message: 'error',
+											status: false
+										}
+									});
+						    });
+							//coupon redeemed, update user as winner
+						}
+						else {
+							reject({
+								data: {
+									message: 'error',
+									status: false
+								}
+							});
+						}
+					})
+				}
+				else {
+					resolve({
+						data: {
+							message: "marked.",
+							status:true
+						}
+					});
+				}
+			}).catch((error) => {
+				console.error(error);
+			})
+		});
+		// var markForm = new FormData();
+  //   markForm.append('id', userId);
+  //   markForm.append('state', 'win');
+  //   markForm.append('couponGroup', group);
+  //   markForm.append('source', source);
+  //   return axios.post(domain + '/api/coupon/softbank/mark_user', markForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
 	},
 	trackWin: function(userId) {
 		if (window.location.hostname.indexOf('localhost') < 0) {
@@ -238,11 +311,46 @@ var user = {
 		}
 	},
 	lose: function(userId, source) {
-		var markForm = new FormData();
-    markForm.append('id', userId);
-    markForm.append('state', 'lose');
-	  markForm.append('source', source);
-    return axios.post(domain + '/api/coupon/softbank/mark_user', markForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+		var userQuery = JSON.stringify({
+			id: userId
+		});
+		var updateState = JSON.stringify({
+			state: 'lose',
+		});
+		return new Promise(function(resolve, reject) {
+			axios.post('http://api.mobileads.com/mgd/updOne?col=' + userCollection + '&qobj=' + encodeURIComponent(userQuery) + '&uobj=' + encodeURIComponent(updateState))
+	    .then((response) => {
+				if (response.data.status == 'success') {
+					resolve({
+						data: {
+							message: "marked.",
+							status:true
+						}
+					});
+				}
+				else {
+					reject({
+						data: {
+							message: "error during mark",
+							status:true
+						}
+					});
+				}
+	    }).catch((error) => {
+				console.error(error);
+				reject({
+					data: {
+						message: "error during mark",
+						status:true
+					}
+				});
+	    });
+	  });
+		// var markForm = new FormData();
+  //   markForm.append('id', userId);
+  //   markForm.append('state', 'lose');
+	 //  markForm.append('source', source);
+  //   return axios.post(domain + '/api/coupon/softbank/mark_user', markForm, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
 	},
 	passResult: function(userId, flag, source, couponLink) { // flag: 1 = win, 0 = lose
 		var psForm = new FormData();
