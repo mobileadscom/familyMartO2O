@@ -520,7 +520,7 @@ var user = {
 	loadLocal: function() {
 		if (window.localStorage.getItem('localUser')) {
 			user.info.id = window.localStorage.getItem('localUser');
-			user.info.couponLink = window.localStorage.getItem('localUser');
+			user.info.couponLink = window.localStorage.getItem('localCoupon');
 			user.info.state = window.localStorage.getItem('localState');
 		}
 	},
