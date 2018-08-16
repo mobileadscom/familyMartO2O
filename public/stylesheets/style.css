@@ -32,6 +32,11 @@ div {
     font-size: 16px;
   }
 
+  .terms .paragraph {
+    text-indent: 30px;
+    margin: 10px auto;
+  }
+
   .terms .points-title:before {
     height: 15px;
     width: 15px;
@@ -93,6 +98,11 @@ div {
 
   .terms .instruction {
     font-size: 20px;
+  }
+
+  .terms .paragraph {
+    text-indent: 50px;
+    margin: 20px auto;
   }
 
   .terms .points-title:before {
@@ -208,7 +218,7 @@ div {
   overflow-x: hidden;
   border: 1px solid #AAA;
   padding: 12px;
-  text-align: left;
+  text-align: center;
   position: relative;
   margin: 15px auto 0px;
 }
@@ -247,6 +257,43 @@ div {
   font-weight: 600;
 }
 
+.terms .paragraph {
+  max-width: 600px;
+}
+
+.terms .list {
+  max-width: 700px;
+  margin: auto;
+  text-align: left;
+}
+
+.terms .list ol{
+  padding-left: 20px;
+}
+
+.terms .list ol li {
+  margin: 5px 0px;
+}
+
+.terms .j-list-wrapper {
+  text-align: left;
+}
+
+.terms .j-list {
+  margin: 5px 0px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+.terms .j-list .j-point {
+   display: inline-block;
+   margin: 0px 5px;
+}
+
+.terms .j-list .j-text {
+  display: inline-block;
+}
 /*.terms .points {
   position: absolute;
   top: 100%;
